@@ -1,0 +1,15 @@
+Flask==0.12.5
+Flask-SQLAlchemy==2.4.4
+ipython==6.5.0
+ipython-genutils==0.2.0
+ipython-sql==0.3.9
+ntlm-auth==1.5.0
+numba==0.35.0
+numexpr==2.6.4
+numpy==1.12.1
+pandas==0.23.3
+pickleshare==0.7.4
+plotly==2.0.15
+requests==2.25.1
+scikit-learn==0.19.1
+SQLAlchemy==1.2.19
