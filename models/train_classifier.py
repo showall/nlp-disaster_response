@@ -19,6 +19,18 @@ from sklearn.linear_model import LogisticRegression
 import pickle
 
 def load_data(database_filepath):
+    """
+        load sqlite database from database_filepath
+        and make dataframe from `Message` table
+        
+        input:
+        database_filepath: directory of database
+        
+        returns:
+        X: message text list
+        Y: corresponding category list
+        columns: categorical labels of Y
+    """
     engine = create_engine(f'sqlite:///{database_filepath}')
     df = pd.read_sql("InsertTableName", con = engine)
     X = df["message"]
@@ -36,6 +48,14 @@ def load_data(database_filepath):
     
 
 def tokenize(text):
+    """
+        tokenize the text and returns list of token
+        - tokenize
+        - lemmatize
+        - normalize
+        - stop words filtering
+        - punctuation filtering
+    """
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -47,10 +67,20 @@ def tokenize(text):
     return clean_tokens
 
 def build_model():
-    model = Pipeline(steps= [("tokenizer",CountVectorizer(tokenizer=tokenize, ngram_range=(1, 1))),            ("estimator",MultiOutputClassifier(LogisticRegression(C=0.5, penalty="l1")))])
+    """
+        Build a count_vectorizer,multi-output logistic regression model as a pipeline
+        returns:
+        model : a pipeline model
+    """
+    model = Pipeline(steps= [("tokenizer",CountVectorizer(tokenizer=tokenize, ngram_range=(1, 1))),
+    ("estimator",MultiOutputClassifier(LogisticRegression(C=0.5, penalty="l1")))])
     return model
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+        evaludate the model by X_test, Y_Test dataset
+        print the classification report(f1-score, recall, precision) of each column(category)
+    """
     score = []
     cr = []
     for i in range (len(category_names)):
@@ -67,6 +97,9 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+        Save the model as a pickle file to model_filepath
+    """
     with open(model_filepath, "wb") as f:
         pickle.dump(model, f)
 

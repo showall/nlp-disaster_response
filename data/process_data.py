@@ -4,6 +4,9 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
+    """
+        load message and category files and returns as a merged dataframe
+    """
     messages = pd.read_csv(messages_filepath)
     categories =  pd.read_csv(categories_filepath)
     df = messages.merge(categories)
@@ -20,11 +23,22 @@ def load_data(messages_filepath, categories_filepath):
     
     
 def clean_data(df):
+    """
+        clean the data frame.
+        - rename the category columns.
+        - convert category value to numeric
+        - drop duplicates
+        returns cleaned dataframe.
+    """    
     df = df.drop_duplicates()
     return df
 
 
 def save_data(df, database_filename):
+    """
+        Save dataframe to `Message` table in sqlite file at database_filename
+        if `Message` table is exists, replace it.
+    """
     engine = create_engine(f'sqlite:///{database_filename}')
     df.to_sql("YourTableName", engine, index=False)  
 
