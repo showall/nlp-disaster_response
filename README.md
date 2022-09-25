@@ -1,4 +1,8 @@
 # Disaster Response Pipeline Project
+## Introduction
+
+The project is an web app designed for the use of disasters or emergencies to sort help-seeking messages into the closest categories such food requests, medical helps, shelters etc thereby better equiping agencies to dispatch help appropriately and more importantly timely as no manual help would be required to screen through each message.
+
 
 ## Getting Started
 
